@@ -1,0 +1,33 @@
+schema-version: 1.0
+
+const:
+    conf: /etc/apache2
+    documentRoot: /var/www/html
+    log: /var/log/apache2
+    run: /var/run/apache2
+in:
+    port: 8000
+
+
+require: ubuntu:20.04
+
+provision:
+    - pkg: apache2
+    - copy:
+          templates:
+              - envvars
+              - ports.conf
+          todir: "{% conf %}"
+    - copy:
+         template: 000-default.conf
+         todir: "{% conf %}/sites-available"
+    - folder:
+          paths:
+              - "{% run %}"
+              - "{% log %}"
+          owner: "{% xbeeUser %}"
+          group: "{% xbeeGroup %}"
+          recursive: true
+
+volume: "{% log %}"
+port: "{% port %}"
