@@ -32,5 +32,5 @@ provision:
 volume: "{% log %}"
 port: "{% port %}"
 
-up: apachectl up
-down: apachectl down
+up: apachectl start
+down: apachectl stop
