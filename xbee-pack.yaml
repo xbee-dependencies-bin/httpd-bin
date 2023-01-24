@@ -31,3 +31,6 @@ provision:
 
 volume: "{% log %}"
 port: "{% port %}"
+
+up: apachectl up
+down: apachectl down
