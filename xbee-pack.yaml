@@ -5,7 +5,7 @@ const:
     documentRoot: /var/www/html
     log: /var/log/apache2
     run: /var/run/apache2
-in:
+var:
     port: 8000
 
 
@@ -17,20 +17,20 @@ provision:
           templates:
               - envvars
               - ports.conf
-          todir: "{% conf %}"
+          todir: "{{ .conf }}"
     - copy:
          template: 000-default.conf
-         todir: "{% conf %}/sites-available"
+         todir: "{{ .conf }}/sites-available"
     - folder:
           paths:
-              - "{% run %}"
-              - "{% log %}"
-          owner: "{% xbeeUser %}"
-          group: "{% xbeeGroup %}"
+              - "{{ .run }}"
+              - "{{ .log }}"
+          owner: "{{ .xbeeUser }}"
+          group: "{{ .xbeeGroup }}"
           recursive: true
 
-volume: "{% log %}"
-port: "{% port %}"
+volume: "{{ .log }}"
+port: "{{ .port }}"
 
 up: apachectl start
 down: apachectl stop
